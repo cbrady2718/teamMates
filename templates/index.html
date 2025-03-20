@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Six Degrees of NBA</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        h1 {
+            color: #f39c12;
+            margin-bottom: 20px;
+        }
+        .player-card {
+            display: flex;
+            align-items: center;
+            background: #2c2c2c;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .player-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5%;
+            margin-right: 15px;
+        }
+        .player-info {
+            text-align: left;
+        }
+        .player-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .player-years {
+            font-size: 14px;
+            color: #bbb;
+        }
+        .path-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #f39c12;
+            margin: 10px 0;
+        }
+        .edge-info {
+            font-size: 14px;
+            color: #bbb;
+            margin: -5px 0 10px 0;
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
+            background-color: #2c2c2c;
+            color: white;
+        }
+        button {
+            width: 100%;
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+        .status-container {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        .error { color: #e74c3c; }
+        .success { color: #2ecc71; }
+        #game-over {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .player-card-header {
+            flex: 1;
+            margin: 0 10px;
+        }
+        .paths-container {
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .paths-container .player-card {
+            margin: 5px 0;
+        }
+
+        .paths-container h3 {
+            color: #f39c12;
+            margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            background: #1e1e1e;
+            padding: 5px 0;
+            z-index: 1;
+        }
+
+        /* Ensure game screen path is scrollable too */
+        #path-container {
+            max-height: 50vh;
+            overflow-y: auto;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Six Degrees of NBA</h1>
+        
+        <div id="start-screen">
+            <label>Start Player: <input type="text" id="start-player"></label>
+            <label>End Player: <input type="text" id="end-player"></label>
+            <button onclick="startGame()">Start Game</button>
+        </div>
+        <div id="game-screen" style="display: none;">
+            <h2>Goal</h2>
+            <div class="player-header"> 
+                <div id="start-player-card" class="player-card player-card-header"></div>
+                <div class="horizontal-arrow">→</div>
+                <div id="target-player-card" class="player-card player-card-header"></div>
+            </div>
+            <h2>Teammate Path</h2>
+            <div id="path-container"></div>
+            <div>↓</div>
+            <input type="text" id="guess-input">
+            <div>Wrong Guesses: <span id="wrong-guesses">0</span>/3</div>
+            <button onclick="goBack()" id="back-button" style="background-color: #666;" disabled>Back</button>
+            <div id="message"></div>
+        </div>
+        <!-- <div id="game-screen" style="display: none;">
+            <div>Start:</div>
+            <div id="start-player-card" class="player-card"></div>
+            <div id="start-to-path-arrow" class="path-arrow" style="display: none;">↓</div>
+            <div id="path-container"></div>
+            <input type="text" id="guess-input">
+            <div>Target:</div>
+            <div id="target-player-card" class="player-card"></div>
+            <div>Wrong Guesses: <span id="wrong-guesses">0</span>/3</div>
+            <button onclick="goBack()" id="back-button" style="background-color: #666;" disabled>Back</button>
+            <div id="message"></div>
+        </div> -->
+
+        <div id="game-over" style="display: none;">
+            <div id="result"></div>
+            <div class="paths-container" style="display: flex; justify-content: center; gap: 20px; max-height: 60vh; overflow-y: auto;">
+                <div id="user-path-container" style="flex: 1;">
+                    <h3>Your Path</h3>
+                </div>
+                <div id="optimal-path-container" style="flex: 1; display: none;">
+                    <h3>Optimal Path</h3>
+                </div>
+            </div>
+            <button id="show-optimal-btn" style="display: none; margin-top: 15px;">Show Optimal Path</button>
+            <button onclick="location.reload()" style="margin-top: 15px;">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+            // Autocomplete for start and end players (no select action)
+            $("#start-player, #end-player").autocomplete({
+                source: function(request, response) {
+                    $.get("/autocomplete", { q: request.term }, function(data) {
+                        response(data);
+                    });
+                },
+                minLength: 2
+            });
+
+            // Autocomplete for guess input (with select action)
+            $("#guess-input").autocomplete({
+                source: function(request, response) {
+                    $.get("/autocomplete", { q: request.term }, function(data) {
+                        response(data);
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $("#guess-input").val(ui.item.value);
+                    makeGuess();
+                    return false;
+                }
+            });
+
+            // Trigger guess on Enter key only for guess-input
+            $("#guess-input").keypress(function(event) {
+                if (event.which === 13) {  // Enter key
+                    event.preventDefault();
+                    makeGuess();
+                }
+            });
+        });
+
+        function startGame() {
+            const start = $("#start-player").val();
+            const end = $("#end-player").val();
+            $("#start-to-path-arrow").show();
+            $.ajax({
+                url: '/start_game',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ start_player: start, end_player: end }),
+                success: function(data) {
+                    $("#start-screen").hide();
+                    $("#game-screen").show();
+                    
+                    updatePlayerCard("#start-player-card", data.path[0].name, data.path[0].years, data.path[0].image);
+                    updatePlayerCard("#target-player-card", data.target_player.name, data.target_player.years, data.target_player.image);
+                    console.log(data.path)
+                    console.log(data.path.slice(1))
+                    console.log('----')
+                    updatePath(data.path, data.edges);
+                    $("#back-button").prop('disabled', data.path.length <= 1);
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON.error);
+                }
+            });
+        }
+
+        // function makeGuess() {
+        //     const guess = $("#guess-input").val();
+        //     if (!guess) return;  // Prevent empty guesses
+            
+        //     $.ajax({
+        //         url: '/guess',
+        //         method: 'POST',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify({ guess: guess }),
+        //         success: function(data) {
+        //             if (data.correct) {
+        //                 updatePath(data.path, data.edges);
+        //                 $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
+        //                 $("#back-button").prop('disabled', false);
+        //             } else {
+        //                 $("#wrong-guesses").text(data.wrong_guesses);
+        //                 $("#message").removeClass("success").addClass("error").text("Not a teammate!");
+        //             }
+                    
+        //             if (data.game_over) {
+        //                 $("#game-screen").hide();
+        //                 $("#game-over").show();
+        //                 $("#result").text(data.won ? "You Won!" : "Game Over!");
+        //                 updatePath(data.shortest_path, data.shortest_edges, "#shortest-path-container");
+        //             }
+        //             $("#guess-input").val("");
+        //         },
+        //         error: function(xhr) {
+        //             $("#message").addClass("error").text(xhr.responseJSON.error);
+        //             $("#guess-input").val("");
+        //         }
+        //     });
+        // }
+        function makeGuess() {
+            const guess = $("#guess-input").val();
+            if (!guess) return;  // Prevent empty guesses
+            
+            $.ajax({
+                url: '/guess',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ guess: guess }),
+                success: function(data) {
+                    if (data.correct) {
+                        updatePath(data.path, data.edges);
+                        $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
+                        $("#back-button").prop('disabled', false);
+                    } else {
+                        $("#wrong-guesses").text(data.wrong_guesses);
+                        $("#message").removeClass("success").addClass("error").text("Not a teammate!");
+                    }
+                    
+                    if (data.game_over) {
+                        $("#game-screen").hide();
+                        $("#game-over").show();
+                        
+                        if (data.won) {
+                            $("#result").text("You Won!");
+                            // Show user's path
+                            updatePath(data.path, data.edges, "#user-path-container");
+                            
+                            // Compare path lengths and show optimal path button if user's path is longer
+                            if (data.path.length > data.shortest_path.length) {
+                                $("#show-optimal-btn").show().on('click', function() {
+                                    showOptimalPath(data.shortest_path, data.shortest_edges);
+                                });
+                            }
+                        } else {
+                            $("#result").text("Game Over!");
+                            updatePath(data.shortest_path, data.shortest_edges, "#optimal-path-container");
+                            $("#optimal-path-container").show();
+                        }
+                    }
+                    $("#guess-input").val("");
+                },
+                error: function(xhr) {
+                    $("#message").addClass("error").text(xhr.responseJSON.error);
+                    $("#guess-input").val("");
+                }
+            });
+        }
+        function goBack() {
+            $.ajax({
+                url: '/go_back',
+                method: 'POST',
+                success: function(data) {
+                    updatePath(data.path, data.edges);
+                    $("#wrong-guesses").text(data.wrong_guesses);
+                    $("#message").text("");
+                    $("#back-button").prop('disabled', data.path.length <= 1);
+                },
+                error: function(xhr) {
+                    $("#message").addClass("error").text(xhr.responseJSON.error);
+                }
+            });
+        }
+
+        function updatePlayerCard(selector, name, years, image) {
+            $(selector).html(`
+                <img src="${image}" alt="${name}">
+                <div class="player-info">
+                    <div class="player-name">${name}</div>
+                    <div class="player-years">${years}</div>
+                </div>
+            `);
+        }
+
+        function showOptimalPath(shortestPath, shortestEdges) {
+            $("#show-optimal-btn").hide();
+            $("#optimal-path-container").show();
+            updatePath(shortestPath, shortestEdges, "#optimal-path-container");
+        }
+
+        // Update the existing updatePath function to handle different containers
+        function updatePath(path, edges, container = "#path-container") {
+            let html = "";
+            for (let i = 0; i < path.length; i++) {
+                html += `<div class="player-card">
+                    <img src="${path[i].image}" alt="${path[i].name}">
+                    <div class="player-info">
+                        <div class="player-name">${path[i].name}</div>
+                        <div class="player-years">${path[i].years}</div>
+                    </div>
+                </div>`;
+                if (i < path.length - 1) {
+                    html += `<div class="path-arrow">↓</div>`;
+                    html += `<div class="edge-info">${edges[i]}</div>`;
+                }
+            }
+            $(container).html(html);
+        }
+    </script>
+</body>
+</html>
