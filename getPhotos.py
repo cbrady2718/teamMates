@@ -77,7 +77,7 @@ def download_multiple_players(player_ids, save_dir="./static/images"):
         if bob == True:
             print(str(total -i) + " remaining...")
             download_player_photo(player_id, save_dir)
-        if player_id == 'navarju01':
+        if player_id == 'turnehe02':
             bob = True
 
 # Example usage
