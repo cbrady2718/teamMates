@@ -19,6 +19,40 @@ game_state = {
     'won': False
 }
 
+def best_next_nodes(G, start_id, end_id):
+    """Finds the 5 best next nodes from start to end in the shortest path"""
+    
+    
+    neighbors = list(G.neighbors(start_id))  # Get neighboring node IDs
+    
+    if not neighbors:
+        return []
+
+    # Compute shortest path lengths from each neighbor to the target
+    path_lengths = {}
+    for neighbor in neighbors:
+        try:
+            path_lengths[neighbor] = nx.shortest_path_length(G, source=neighbor, target=end_id)
+        except nx.NetworkXNoPath:
+            path_lengths[neighbor] = float('inf')  # No path to the target
+    
+    # Find the minimum remaining path length
+    min_length = min(path_lengths.values()) if path_lengths else float('inf')
+
+    # Find best nodes that reduce the path length
+    best_nodes = [neighbor for neighbor, length in path_lengths.items() if length < min_length + 1]
+
+    # Find nodes that maintain the same shortest path
+    same_length_nodes = [neighbor for neighbor, length in path_lengths.items() if length == min_length + 1]
+
+    # Select up to 5 nodes (all best_nodes, then fill with random same_length_nodes)
+    selected_nodes = best_nodes[:]
+    if len(selected_nodes) < 5:
+        extra_nodes = same_length_nodes[: 5 - len(selected_nodes)]
+        selected_nodes.extend(extra_nodes)
+
+    # Convert selected node IDs back to full node dicts
+    return [node for node in G.nodes(data=True) if node[0] in selected_nodes]
 def getImage(player_id):
     file_path = "static/images/"+player_id+".jpg"
     if os.path.exists(file_path):
@@ -102,13 +136,14 @@ def start_game():
     game_state['wrong_guesses'] = 0
     game_state['game_over'] = False
     game_state['won'] = False
-    
+    sugs = best_next_nodes(G, start_id, end_id)
     return jsonify({
         'current_player': format_player2(start_id),
         'target_player': format_player2(end_id),
         'path': [format_player2(p) for p in game_state['path']],
         'edges': [],
-        'wrong_guesses': 0
+        'wrong_guesses': 0,
+        'suggestions' : sugs
     })
 
 @app.route('/guess', methods=['POST'])
@@ -124,6 +159,7 @@ def make_guess():
         return jsonify({'error': 'Player not found'}), 400
     
     if guess_id in G.neighbors(game_state['current_player']):
+        sugs = best_next_nodes(G, guess_id, game_state['target_player'])
         game_state['path'].append(guess_id)
         game_state['current_player'] = guess_id
         
@@ -150,7 +186,8 @@ def make_guess():
             'correct': True,
             'path': [format_player2(p) for p in game_state['path']],
             'edges': edges,
-            'game_over': False
+            'game_over': False,
+            'sugs' : sugs
         })
     else:
         game_state['wrong_guesses'] += 1
@@ -208,5 +245,6 @@ def serve_image(filename):
 
 if __name__ == '__main__':
     if __name__ == "__main__":
-        port = int(os.environ.get("PORT", 5000))
-        app.run(host="0.0.0.0", port=port)
+        #port = int(os.environ.get("PORT", 5000))
+        #app.run(host="0.0.0.0", port=port)
+        app.run()
