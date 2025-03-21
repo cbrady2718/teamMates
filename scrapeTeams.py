@@ -286,11 +286,12 @@ def main():
         nba_teams = ['BOS', 'NYK','WSC','PHW', 'PRO','TRH','CHS','STB','CLR','DTF','PIT','BLB','ROC','MNL','FTW','INJ']"
         """
         # Scrape a single season (e.g., 2023 for 2022-23)
-        with open('teamsByYear.json', 'r') as file:
+        with open('teamYears1967.json', 'r') as file:
             basketball_data = json.load(file)
         teams_per_year = {}
         team_rosters = {}
-        for season in range(1947,1980):
+        seasons = [2025]
+        for season in seasons:#range(2025,2026):
             nba_teams = basketball_data[str(season)]
             team_rosters = {}
             logger.info(f"scraping {season}...")
@@ -311,7 +312,7 @@ def main():
                         for team, players in team_rosters.items() 
                         for player in players]
             roster_df = pd.DataFrame(roster_data, columns=["Team", "Player_ID", "Player_Name"])
-            roster_df.to_csv(f"historicalRosters/nba_rosters_{season}.csv", index=False)
+            roster_df.to_csv(f"historicalRosters2/nba_rosters_{season}.csv", index=False)
             logger.info(f"Rosters saved to nba_rosters_{season}.csv")
             
         db.close()

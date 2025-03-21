@@ -1,0 +1,535 @@
+Team,Player_ID,Player_Name
+ATL,youngtr01,Trae Young
+ATL,daniedy01,Dyson Daniels
+ATL,okongon01,Onyeka Okongwu
+ATL,risacza01,Zaccharie Risacher
+ATL,capelca01,Clint Capela
+ATL,mathega01,Garrison Mathews
+ATL,krejcvi01,Vit Krejci
+ATL,johnsja05,Jalen Johnson
+ATL,wallake01,Keaton Wallace  (TW)
+ATL,nancela02,Larry Nance Jr.
+ATL,barlodo01,Dominick Barlow
+ATL,gueyemo02,Mouhamed Gueye
+ATL,mannte01,Terance Mann
+ATL,niangge01,Georges Niang
+ATL,leverca01,Caris LeVert
+ATL,bufkiko01,Kobe Bufkin
+ATL,plowdda01,Daeqwon Plowden  (TW)
+ATL,toppija01,Jacob Toppin  (TW)
+BOS,pritcpa01,Payton Pritchard
+BOS,whitede01,Derrick White
+BOS,tatumja01,Jayson Tatum
+BOS,kornelu01,Luke Kornet
+BOS,hausesa01,Sam Hauser
+BOS,brownja02,Jaylen Brown
+BOS,holidjr01,Jrue Holiday
+BOS,horfoal01,Al Horford
+BOS,quetane01,Neemias Queta
+BOS,walshjo01,Jordan Walsh
+BOS,porzikr01,Kristaps Porziņģis
+BOS,tillmxa01,Xavier Tillman Sr.
+BOS,scheiba01,Baylor Scheierman
+BOS,peterdr01,Drew Peterson  (TW)
+BOS,craigto01,Torrey Craig
+BOS,davisjd01,JD Davison  (TW)
+BOS,norrimi01,Miles Norris  (TW)
+BRK,wilsoja03,Jalen Wilson
+BRK,johnske07,Keon Johnson
+BRK,claxtni01,Nic Claxton
+BRK,willizi02,Ziaire Williams
+BRK,johnsca02,Cameron Johnson
+BRK,martity01,Tyrese Martin
+BRK,sharpda01,Day'Ron Sharpe
+BRK,clownno01,Noah Clowney
+BRK,watfotr01,Trendon Watford
+BRK,beekmre01,Reece Beekman  (TW)
+BRK,thomaca02,Cam Thomas
+BRK,russeda01,D'Angelo Russell
+BRK,evbuoto01,Tosan Evbuomwan  (TW)
+BRK,whiteda01,Dariq Whitehead
+BRK,lewisma05,Maxwell Lewis
+BRK,meltode01,De'Anthony Melton
+BRK,etienty01,Tyson Etienne  (TW)
+CHI,buzelma01,Matas Buzelis
+CHI,phillju01,Julian Phillips
+CHI,whiteco01,Coby White
+CHI,terryda01,Dalen Terry
+CHI,vucevni01,Nikola Vučević
+CHI,giddejo01,Josh Giddey
+CHI,smithja04,Jalen Smith
+CHI,willipa01,Patrick Williams
+CHI,hortota01,Talen Horton-Tucker
+CHI,dosunay01,Ayo Dosunmu
+CHI,balllo01,Lonzo Ball
+CHI,carteje01,Jevon Carter
+CHI,jonestr01,Tre Jones
+CHI,huertke01,Kevin Huerter
+CHI,colliza01,Zach Collins
+CHI,liddeej01,E.J. Liddell  (TW)
+CHI,milleem01,Emanuel Miller  (TW)
+CHI,youngja05,Jahmir Young  (TW)
+CHO,greenjo02,Josh Green
+CHO,diabamo01,Moussa Diabaté
+CHO,curryse01,Seth Curry
+CHO,bridgmi02,Miles Bridges
+CHO,smithni01,Nick Smith Jr.
+CHO,salauti01,Tidjane Salaün
+CHO,ballla01,LaMelo Ball
+CHO,willima07,Mark Williams
+CHO,jeffrda01,DaQuan Jeffries
+CHO,millebr02,Brandon Miller
+CHO,gibsota01,Taj Gibson
+CHO,simpskj01,KJ Simpson  (TW)
+CHO,willigr01,Grant Williams
+CHO,manntr01,Tre Mann
+CHO,nurkiju01,Jusuf Nurkić
+CHO,baughda01,Damion Baugh  (TW)
+CHO,moorewe01,Wendell Moore Jr.  (TW)
+CHO,okogijo01,Josh Okogie
+CHO,garrema01,Marcus Garrett
+CLE,allenja01,Jarrett Allen
+CLE,garlada01,Darius Garland
+CLE,jeromty01,Ty Jerome
+CLE,mitchdo01,Donovan Mitchell
+CLE,mobleev01,Evan Mobley
+CLE,merrisa01,Sam Merrill
+CLE,wadede01,Dean Wade
+CLE,portecr01,Craig Porter Jr.
+CLE,okorois01,Isaac Okoro
+CLE,tysonja01,Jaylon Tyson
+CLE,strusma01,Max Strus
+CLE,thomptr01,Tristan Thompson
+CLE,huntede01,De'Andre Hunter
+CLE,travelu01,Luke Travers  (TW)
+CLE,batesem01,Emoni Bates  (TW)
+CLE,greenja02,Javonte Green
+CLE,tomlina01,Nae'Qwan Tomlin  (TW)
+DAL,dinwisp01,Spencer Dinwiddie
+DAL,thompkl01,Klay Thompson
+DAL,marshna01,Naji Marshall
+DAL,prospol01,Olivier-Maxence Prosper
+DAL,gaffoda01,Daniel Gafford
+DAL,irvinky01,Kyrie Irving
+DAL,washipj01,P.J. Washington
+DAL,hardyja02,Jaden Hardy
+DAL,poweldw01,Dwight Powell
+DAL,edwarke02,Kessler Edwards  (TW)
+DAL,livelde01,Dereck Lively II
+DAL,willibr03,Brandon Williams  (TW)
+DAL,chrisma02,Max Christie
+DAL,exumda01,Dante Exum
+DAL,martica02,Caleb Martin
+DAL,joneska01,Kai Jones  (TW)
+DAL,davisan02,Anthony Davis
+DEN,braunch01,Christian Braun
+DEN,portemi01,Michael Porter Jr.
+DEN,westbru01,Russell Westbrook
+DEN,jokicni01,Nikola Jokić
+DEN,murraja01,Jamal Murray
+DEN,strawju01,Julian Strawther
+DEN,watsope01,Peyton Watson
+DEN,nnajize01,Zeke Nnaji
+DEN,jordade01,DeAndre Jordan
+DEN,tysonhu01,Hunter Tyson
+DEN,gordoaa01,Aaron Gordon
+DEN,pickeja02,Jalen Pickett
+DEN,alexatr01,Trey Alexander  (TW)
+DEN,hallpj01,PJ Hall  (TW)
+DEN,jonessp01,Spencer Jones  (TW)
+DEN,saricda01,Dario Šarić
+DEN,cancavl01,Vlatko Čančar
+DEN,holmeda01,DaRon Holmes
+DET,beaslma01,Malik Beasley
+DET,hollaro01,Ron Holland
+DET,durenja01,Jalen Duren
+DET,harrito02,Tobias Harris
+DET,hardati02,Tim Hardaway Jr.
+DET,cunnica01,Cade Cunningham
+DET,stewais01,Isaiah Stewart
+DET,fontesi01,Simone Fontecchio
+DET,sassema01,Marcus Sasser
+DET,thompau01,Ausar Thompson
+DET,reedpa01,Paul Reed
+DET,iveyja01,Jaden Ivey
+DET,schrode01,Dennis Schröder
+DET,waterli01,Lindy Waters III
+DET,klintbo01,Bobi Klintman
+DET,jenkida01,Daniss Jenkins  (TW)
+DET,smithto05,Tolu Smith  (TW)
+DET,harpero02,Ron Harper Jr.  (TW)
+GSW,hieldbu01,Buddy Hield
+GSW,looneke01,Kevon Looney
+GSW,moodymo01,Moses Moody
+GSW,curryst01,Stephen Curry
+GSW,paytoga02,Gary Payton II
+GSW,greendr01,Draymond Green
+GSW,jackstr02,Trayce Jackson-Davis
+GSW,podzibr01,Brandin Podziemski
+GSW,santogu01,Gui Santos
+GSW,kuminjo01,Jonathan Kuminga
+GSW,spencpa01,Pat Spencer
+GSW,postqu01,Quinten Post
+GSW,butleji01,Jimmy Butler
+GSW,roweja01,Jackson Rowe  (TW)
+GSW,armstta02,Taran Armstrong  (TW)
+GSW,keybr01,Braxton Key  (TW)
+HOU,greenja05,Jalen Green
+HOU,sengual01,Alperen Şengün
+HOU,brookdi01,Dillon Brooks
+HOU,thompam01,Amen Thompson
+HOU,holidaa01,Aaron Holiday
+HOU,vanvlfr01,Fred VanVleet
+HOU,adamsst01,Steven Adams
+HOU,smithja05,Jabari Smith Jr.
+HOU,easonta01,Tari Eason
+HOU,tateja01,Jae'Sean Tate
+HOU,sheppre01,Reed Sheppard
+HOU,whitmca01,Cam Whitmore
+HOU,landajo01,Jock Landale
+HOU,greenje02,Jeff Green
+HOU,willije02,Jeenathan Williams
+HOU,mcveija01,Jack McVeigh  (TW)
+HOU,nfalyda01,N'Faly Dante  (TW)
+HOU,roddyda01,David Roddy  (TW)
+IND,siakapa01,Pascal Siakam
+IND,toppiob01,Obi Toppin
+IND,mccontj01,T.J. McConnell
+IND,halibty01,Tyrese Haliburton
+IND,mathube01,Bennedict Mathurin
+IND,walkeja02,Jarace Walker
+IND,turnemy01,Myles Turner
+IND,sheppbe01,Ben Sheppard
+IND,nembhan01,Andrew Nembhard
+IND,bryanth01,Thomas Bryant
+IND,furphjo01,Johnny Furphy
+IND,nesmiaa01,Aaron Nesmith
+IND,jacksqu01,Quenton Jackson  (TW)
+IND,freemen01,Enrique Freeman  (TW)
+IND,johnsja01,James Johnson
+IND,dennira01,RayJ Dennis  (TW)
+IND,bradlto01,Tony Bradley
+IND,jacksis01,Isaiah Jackson
+LAC,zubaciv01,Ivica Zubac
+LAC,coffeam01,Amir Coffey
+LAC,batumni01,Nicolas Batum
+LAC,hardeja01,James Harden
+LAC,jonesde02,Derrick Jones Jr.
+LAC,dunnkr01,Kris Dunn
+LAC,powelno01,Norman Powell
+LAC,millejo02,Jordan Miller
+LAC,brownko01,Kobe Brown
+LAC,leonaka01,Kawhi Leonard
+LAC,bogdabo01,Bogdan Bogdanović
+LAC,eubandr01,Drew Eubanks
+LAC,simmobe01,Ben Simmons
+LAC,millspa02,Patty Mills
+LAC,chrisca02,Cam Christie
+LAC,flowetr01,Trentyn Flowers  (TW)
+LAC,baldwpa01,Patrick Baldwin Jr.  (TW)
+LAC,lundyse01,Seth Lundy  (TW)
+LAL,knechda01,Dalton Knecht
+LAL,reaveau01,Austin Reaves
+LAL,vincega01,Gabe Vincent
+LAL,jamesle01,LeBron James
+LAL,hachiru01,Rui Hachimura
+LAL,hayesja02,Jaxson Hayes
+LAL,kolokch01,Christian Koloko  (TW)
+LAL,reddica01,Cam Reddish
+LAL,finnedo01,Dorian Finney-Smith
+LAL,vandeja01,Jarred Vanderbilt
+LAL,miltosh01,Shake Milton
+LAL,jamesbr02,Bronny James
+LAL,doncilu01,Luka Dončić
+LAL,goodwjo01,Jordan Goodwin  (TW)
+LAL,jemistr01,Trey Jemison  (TW)
+LAL,lenal01,Alex Len
+LAL,morrima02,Markieff Morris
+LAL,klebima01,Maxi Kleber
+MEM,wellsja01,Jaylen Wells
+MEM,pippesc02,Scotty Pippen Jr.
+MEM,clarkbr01,Brandon Clarke
+MEM,jacksja02,Jaren Jackson Jr.
+MEM,banede01,Desmond Bane
+MEM,kennalu01,Luke Kennard
+MEM,edeyza01,Zach Edey
+MEM,huffja01,Jay Huff
+MEM,aldamsa01,Santi Aldama
+MEM,moranja01,Ja Morant
+MEM,konchjo01,John Konchar
+MEM,jacksgg01,GG Jackson II
+MEM,kawamyu01,Yuki Kawamura  (TW)
+MEM,willivi01,Vince Williams Jr.
+MEM,spencca01,Cam Spencer  (TW)
+MEM,stevela01,Lamar Stevens
+MEM,baglema01,Marvin Bagley III
+MEM,pullizy01,Zyon Pullin  (TW)
+MIA,adebaba01,Bam Adebayo
+MIA,herroty01,Tyler Herro
+MIA,robindu01,Duncan Robinson
+MIA,highsha01,Haywood Highsmith
+MIA,roziete01,Terry Rozier
+MIA,jaqueja01,Jaime Jaquez Jr.
+MIA,wareke01,Kel'el Ware
+MIA,jovicni01,Nikola Jović
+MIA,larsspe01,Pelle Larsson
+MIA,burksal01,Alec Burks
+MIA,loveke01,Kevin Love
+MIA,mitchda01,Davion Mitchell
+MIA,smithdr01,Dru Smith  (TW)
+MIA,anderky01,Kyle Anderson
+MIA,wiggian01,Andrew Wiggins
+MIA,johnske10,Keshad Johnson
+MIA,chrisjo01,Josh Christopher  (TW)
+MIA,steveis01,Isaiah Stevens  (TW)
+MIL,lopezbr01,Brook Lopez
+MIL,princta02,Taurean Prince
+MIL,trentga02,Gary Trent Jr.
+MIL,greenaj01,A.J. Green
+MIL,jacksan01,Andre Jackson Jr.
+MIL,lillada01,Damian Lillard
+MIL,antetgi01,Giannis Antetokounmpo
+MIL,portibo01,Bobby Portis
+MIL,rolliry01,Ryan Rollins
+MIL,connapa01,Pat Connaughton
+MIL,umudest01,Stanley Umude  (TW)
+MIL,kuzmaky01,Kyle Kuzma
+MIL,smithty02,Tyler Smith
+MIL,porteke02,Kevin Porter Jr.
+MIL,livinch01,Chris Livingston
+MIL,simsje01,Jericho Sims
+MIL,bouyeja01,Jamaree Bouyea  (TW)
+MIL,nancepe01,Pete Nance  (TW)
+MIN,mcdanja02,Jaden McDaniels
+MIN,alexani01,Nickeil Alexander-Walker
+MIN,reidna01,Naz Reid
+MIN,edwaran01,Anthony Edwards
+MIN,goberru01,Rudy Gobert
+MIN,conlemi01,Mike Conley
+MIN,randlju01,Julius Randle
+MIN,divindo01,Donte DiVincenzo
+MIN,dilliro01,Rob Dillingham
+MIN,minotjo01,Josh Minott
+MIN,garzalu01,Luka Garza
+MIN,shannte01,Terrence Shannon Jr.
+MIN,clarkja02,Jaylen Clark
+MIN,inglejo01,Joe Ingles
+MIN,millele01,Leonard Miller
+MIN,newtotr01,Tristen Newton  (TW)
+MIN,edwarje01,Jesse Edwards  (TW)
+MIN,hylanbo01,Bones Hyland  (TW)
+NOP,missiyv01,Yves Missi
+NOP,mccolcj01,CJ McCollum
+NOP,robinje02,Jeremiah Robinson-Earl
+NOP,murphtr02,Trey Murphy III
+NOP,hawkijo01,Jordan Hawkins
+NOP,alvarjo01,Jose Alvarado
+NOP,bostobr01,Brandon Boston Jr.
+NOP,matkoka01,Karlo Matković
+NOP,reevean01,Antonio Reeves
+NOP,murrade01,Dejounte Murray
+NOP,willizi01,Zion Williamson
+NOP,cainja01,Jamal Cain  (TW)
+NOP,joneshe01,Herbert Jones
+NOP,brownbr01,Bruce Brown
+NOP,olynyke01,Kelly Olynyk
+NOP,brookke02,Keion Brooks Jr.  (TW)
+NOP,quinole01,Lester Quiñones  (TW)
+NYK,bridgmi01,Mikal Bridges
+NYK,hartjo01,Josh Hart
+NYK,anunoog01,OG Anunoby
+NYK,payneca01,Cameron Payne
+NYK,brunsja01,Jalen Brunson
+NYK,townska01,Karl-Anthony Towns
+NYK,mcbrimi01,Miles McBride
+NYK,achiupr01,Precious Achiuwa
+NYK,shamela01,Landry Shamet
+NYK,kolekty01,Tyler Kolek
+NYK,hukpoar01,Ariel Hukporti
+NYK,dadiepa01,Pacome Dadiet
+NYK,robinmi01,Mitchell Robinson
+NYK,wrighde01,Delon Wright
+NYK,watsoan02,Anton Watson  (TW)
+NYK,beaucma01,MarJon Beauchamp  (TW)
+NYK,mcculke01,Kevin McCullar Jr.  (TW)
+OKC,wiggiaa01,Aaron Wiggins
+OKC,gilgesh01,Shai Gilgeous-Alexander
+OKC,dortlu01,Luguentz Dort
+OKC,joeis01,Isaiah Joe
+OKC,willija06,Jalen Williams
+OKC,wallaca01,Cason Wallace
+OKC,willike04,Kenrich Williams
+OKC,harteis01,Isaiah Hartenstein
+OKC,carusal01,Alex Caruso
+OKC,jonesdi01,Dillon Jones
+OKC,willija07,Jaylin Williams
+OKC,diengou01,Ousmane Dieng
+OKC,mitchaj01,Ajay Mitchell
+OKC,flaglad01,Adam Flagler  (TW)
+OKC,holmgch01,Chet Holmgren
+OKC,carlsbr01,Branden Carlson  (TW)
+OKC,ducasal01,Alex Ducas  (TW)
+OKC,topicni01,Nikola Topić
+ORL,blackan01,Anthony Black
+ORL,caldwke01,Kentavious Caldwell-Pope
+ORL,dasiltr01,Tristan Da Silva
+ORL,anthoco01,Cole Anthony
+ORL,isaacjo01,Jonathan Isaac
+ORL,bitadgo01,Goga Bitadze
+ORL,cartewe01,Wendell Carter Jr.
+ORL,howarje01,Jett Howard
+ORL,wagnefr01,Franz Wagner
+ORL,houstca01,Caleb Houstan
+ORL,josepco01,Cory Joseph
+ORL,banchpa01,Paolo Banchero
+ORL,harriga01,Gary Harris
+ORL,suggsja01,Jalen Suggs
+ORL,wagnemo01,Moritz Wagner
+ORL,queentr01,Trevelin Queen  (TW)
+ORL,mccluma01,Mac McClung  (TW)
+ORL,thompet01,Ethan Thompson  (TW)
+PHI,yabusgu01,Guerschon Yabusele
+PHI,oubreke01,Kelly Oubre Jr.
+PHI,councri01,Ricky Council IV
+PHI,maxeyty01,Tyrese Maxey
+PHI,bonaad01,Adem Bona
+PHI,georgpa01,Paul George
+PHI,drumman01,Andre Drummond
+PHI,gordoer01,Eric Gordon
+PHI,dowtije01,Jeff Dowtin  (TW)
+PHI,edwarju01,Justin Edwards
+PHI,lowryky01,Kyle Lowry
+PHI,mccaija01,Jared McCain
+PHI,embiijo01,Joel Embiid
+PHI,grimequ01,Quentin Grimes
+PHI,butleja02,Jared Butler
+PHI,walkelo01,Lonnie Walker IV
+PHI,reeseal01,Alex Reese  (TW)
+PHI,hoodsja01,Jalen Hood-Schifino  (TW)
+PHI,brissos01,Oshae Brissett
+PHI,okekech01,Chuma Okeke
+PHO,jonesty01,Tyus Jones
+PHO,plumlma01,Mason Plumlee
+PHO,bookede01,Devin Booker
+PHO,onealro01,Royce O'Neale
+PHO,dunnry01,Ryan Dunn
+PHO,duranke01,Kevin Durant
+PHO,allengr01,Grayson Allen
+PHO,ighodos01,Oso Ighodaro
+PHO,bealbr01,Bradley Beal
+PHO,morrimo01,Monte Morris
+PHO,bolbo01,Bol Bol
+PHO,richani01,Nick Richards
+PHO,gilleco01,Collin Gillespie  (TW)
+PHO,leeda03,Damion Lee
+PHO,washity02,TyTy Washington Jr.  (TW)
+PHO,bridgja01,Jalen Bridges  (TW)
+PHO,martico01,Cody Martin
+PHO,micicva01,Vasilije Micić
+POR,camarto01,Toumani Camara
+POR,simonan01,Anfernee Simons
+POR,avdijde01,Deni Avdija
+POR,sharpsh01,Shaedon Sharpe
+POR,hendesc01,Scoot Henderson
+POR,murrakr01,Kris Murray
+POR,clingdo01,Donovan Clingan
+POR,bantoda01,Dalano Banton
+POR,walkeja01,Jabari Walker
+POR,grantje01,Jerami Grant
+POR,ruperra01,Rayan Rupert
+POR,aytonde01,Deandre Ayton
+POR,reathdu01,Duop Reath
+POR,williro04,Robert Williams
+POR,mcgowbr01,Bryce McGowens  (TW)
+POR,minayju01,Justin Minaya  (TW)
+POR,thybuma01,Matisse Thybulle
+POR,cissosi01,Sidy Cissoko  (TW)
+SAC,elliske01,Keon Ellis
+SAC,murrake02,Keegan Murray
+SAC,derozde01,DeMar DeRozan
+SAC,sabondo01,Domantas Sabonis
+SAC,monkma01,Malik Monk
+SAC,lylestr01,Trey Lyles
+SAC,mcderdo01,Doug McDermott
+SAC,jonesis01,Isaac Jones  (TW)
+SAC,cartede02,Devin Carter
+SAC,lavinza01,Zach LaVine
+SAC,valanjo01,Jonas Valančiūnas
+SAC,laravja01,Jake LaRavia
+SAC,fultzma01,Markelle Fultz
+SAC,crawfis01,Isaiah Crawford  (TW)
+SAC,jonesma05,Mason Jones  (TW)
+SAC,crowdja01,Jae Crowder
+SAC,taylote01,Terry Taylor
+SAS,barneha02,Harrison Barnes
+SAS,champju02,Julian Champagnie
+SAS,paulch01,Chris Paul
+SAS,castlst01,Stephon Castle
+SAS,johnske04,Keldon Johnson
+SAS,vassede01,Devin Vassell
+SAS,sochaje01,Jeremy Sochan
+SAS,mamuksa01,Sandro Mamukelashvili
+SAS,wembavi01,Victor Wembanyama
+SAS,weslebl01,Blake Wesley
+SAS,branhma01,Malaki Branham
+SAS,bassech01,Charles Bassey
+SAS,foxde01,De'Aaron Fox
+SAS,biyombi01,Bismack Biyombo
+SAS,mclaujo01,Jordan McLaughlin
+SAS,dukeda01,David Duke Jr.  (TW)
+SAS,ingraha01,Harrison Ingram  (TW)
+SAS,minixri01,Riley Minix  (TW)
+TOR,sheadja01,Jamal Shead
+TOR,agbajoc01,Ochai Agbaji
+TOR,barnesc01,Scottie Barnes
+TOR,dickgr01,Gradey Dick
+TOR,barrerj01,RJ Barrett
+TOR,poeltja01,Jakob Poeltl
+TOR,bouchch01,Chris Boucher
+TOR,mogbojo01,Jonathan Mogbo
+TOR,battlja01,Jamison Battle
+TOR,walteja01,Ja'Kobe Walter
+TOR,quickim01,Immanuel Quickley
+TOR,robinor01,Orlando Robinson
+TOR,templga01,Garrett Temple
+TOR,lawsoaj01,A.J. Lawson  (TW)
+TOR,castlco01,Colin Castleton
+TOR,chomcul01,Ulrich Chomche  (TW)
+TOR,rhodeja01,Jared Rhoden  (TW)
+TOR,ingrabr01,Brandon Ingram
+UTA,colliis01,Isaiah Collier
+UTA,filipky01,Kyle Filipowski
+UTA,sensabr01,Brice Sensabaugh
+UTA,georgke01,Keyonte George
+UTA,sextoco01,Collin Sexton
+UTA,kesslwa01,Walker Kessler
+UTA,juzanjo01,Johnny Juzang
+UTA,markkla01,Lauri Markkanen
+UTA,willico04,Cody Williams
+UTA,collijo01,John Collins
+UTA,clarkjo01,Jordan Clarkson
+UTA,pottemi01,Micah Potter  (TW)
+UTA,mykhasv01,Svi Mykhailiuk
+UTA,martike04,KJ Martin
+UTA,harklej01,Elijah Harkless  (TW)
+UTA,tshieos01,Oscar Tshiebwe  (TW)
+UTA,sprinja01,Jaden Springer
+UTA,hendrta01,Taylor Hendricks
+WAS,carrica01,Bub Carrington
+WAS,kispeco01,Corey Kispert
+WAS,georgky01,Kyshawn George
+WAS,coulibi01,Bilal Coulibaly
+WAS,poolejo01,Jordan Poole
+WAS,sarral01,Alex Sarr
+WAS,champju01,Justin Champagnie
+WAS,gillan01,Anthony Gill
+WAS,holmeri01,Richaun Holmes
+WAS,brogdma01,Malcolm Brogdon
+WAS,vukcetr01,Tristan Vukcevic  (TW)
+WAS,middlkh01,Khris Middleton
+WAS,smartma01,Marcus Smart
+WAS,johnsaj01,AJ Johnson
+WAS,martija02,Jaylen Martin  (TW)
+WAS,jonesco02,Colby Jones
+WAS,thorjt01,JT Thor  (TW)
+WAS,beysa01,Saddiq Bey

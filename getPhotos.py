@@ -11,7 +11,7 @@ SAVE_DIR = "./static/images"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 
-with open("teamMateGraph2.pkl", "rb") as f:
+with open("teamMateGraph3.pkl", "rb") as f:
     G = pickle.load(f)
 
 
@@ -21,10 +21,7 @@ from bs4 import BeautifulSoup
 import os
 from urllib.parse import urljoin
 
-def download_player_photo(player_id, save_dir="./static/images"):
-    # Create the save directory if it doesn't exist
-    os.makedirs(save_dir, exist_ok=True)
-    
+def download_player_photo(player_id, file_a, file_b, save_dir="./static/images"):
     # Construct the URL for the player's Basketball Reference page
     url = f"https://www.basketball-reference.com/players/{player_id[0]}/{player_id}.html"
     
@@ -62,27 +59,40 @@ def download_player_photo(player_id, save_dir="./static/images"):
             print(f"Successfully downloaded {player_id}.jpg")
             
         else:
+            pname = str(G.nodes[player_id]["name"])
+            file_a.write(f"{player_id}-{pname}\n")
             print(f"No image found for player {player_id}")
             
     except requests.RequestException as e:
+        pname = str(G.nodes[player_id]["name"])
+        file_b.write(f"{player_id}-{pname}\n")
         print(f"Error downloading image for {player_id}: {str(e)}")
 
 def download_multiple_players(player_ids, save_dir="./static/images"):
-    i = 0
-    total = len(player_ids)
-    bob = False
-    print('total '+str(total))
-    for player_id in player_ids:
-        i += 1
-        if bob == True:
-            print(str(total -i) + " remaining...")
-            download_player_photo(player_id, save_dir)
-        if player_id == 'turnehe02':
-            bob = True
+    with open("image_not_found.txt", "a") as file_a, open("error_downloading.txt", "a") as file_b, open("progress.txt", "w") as file_c:
+        i = 0
+        j = len(player_ids)
+        go = False
+        for player_id in player_ids:
+            i += 1
+            print("progress: "+str(i/j))
+            if not go:
+                if player_id == 'grayeje01':
+                    go = True
+            else:
+                file_c.write(str(i/j)+"\n")
+                file_path = f"static/images/{player_id}.jpg"
+                if os.path.isfile(file_path):
+                    print(f"Picture Exists for {player_id}")
+                else:
+                    download_player_photo(player_id,file_a, file_b,save_dir)
 
 # Example usage
 if __name__ == "__main__":
-    # Example list of player IDs (replace with your actual list)
-    
-    # Download all photos
     download_multiple_players(player_ids)
+    # Example list of player IDs (replace with your actual list)
+
+    # Download all photos
+    #download_multiple_players(player_ids)
+
+

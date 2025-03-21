@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-with open("teamMateGraph2.pkl", "rb") as f:
+with open("teamMateGraph3.pkl", "rb") as f:
     G = pickle.load(f)
 
 game_state = {

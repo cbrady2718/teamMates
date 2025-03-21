@@ -77,13 +77,46 @@ def add_team_to_graph(team_players, team_name, season):
             if team_name not in G[player1_id][player2_id]["seasons"]:
                 G[player1_id][player2_id]["seasons"][team_name] = []
             G[player1_id][player2_id]["seasons"][team_name].append(season)
+def analyze_graph(G):
+    """
+    Return basic analysis of the graph
+    """
+    analysis = {
+        'num_players': G.number_of_nodes(),
+        'num_connections': G.number_of_edges(),
+        'connected_components': nx.number_connected_components(G),
+        'avg_connections_per_player': 2 * G.number_of_edges() / G.number_of_nodes()
+    }
+    
+    # Find players with most connections
+    player_degrees = sorted(G.degree(), key=lambda x: x[1], reverse=True)
+    top_players = []
+    
+    for player_id, degree in player_degrees[:5]:
+        player_name = G.nodes[player_id]['name']
+        top_players.append((player_id, player_name, degree))
+    
+    analysis['top_connected_players'] = top_players
+    
+    return analysis
 if __name__ == "__main__":
     # Replace with your actual directory path
-    directory_path = "/Users/chrbrady/Desktop/teamMates/historicalRosters"
+    directory_path = "/Users/chrbrady/Desktop/teamMates/historicalRosters2"
     process_nba_rosters(directory_path)
 
+
+    analysis = analyze_graph(G)
+    print("\nGraph Analysis:")
+    print(f"Number of players: {analysis['num_players']}")
+    print(f"Number of connections: {analysis['num_connections']}")
+    print(f"Number of connected components: {analysis['connected_components']}")
+    print(f"Average connections per player: {analysis['avg_connections_per_player']:.2f}")
+    
+    print("\nPlayers with most connections:")
+    for player_id, player_name, degree in analysis['top_connected_players']:
+        print(f"{player_name} (ID: {player_id}): {degree} connections")
     #nx.write_gml(G, f"nba_teammate_graph.gml")
-    with open("teamMateGraph2.pkl", "wb") as f:
+    with open("teamMateGraph3.pkl", "wb") as f:
         pickle.dump(G, f)
     #with open("teamMateGraph2.pkl", "rb") as f:
     #    G = pickle.load(f)
