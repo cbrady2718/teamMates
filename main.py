@@ -21,10 +21,8 @@ game_state = {
 
 def best_next_nodes(G, start_id, end_id):
     """Finds the 5 best next nodes from start to end in the shortest path"""
-    
-    
+    print('getting neighbors')
     neighbors = list(G.neighbors(start_id))  # Get neighboring node IDs
-    
     if not neighbors:
         return []
 
@@ -35,7 +33,6 @@ def best_next_nodes(G, start_id, end_id):
             path_lengths[neighbor] = nx.shortest_path_length(G, source=neighbor, target=end_id)
         except nx.NetworkXNoPath:
             path_lengths[neighbor] = float('inf')  # No path to the target
-    
     # Find the minimum remaining path length
     min_length = min(path_lengths.values()) if path_lengths else float('inf')
 
@@ -52,7 +49,15 @@ def best_next_nodes(G, start_id, end_id):
         selected_nodes.extend(extra_nodes)
 
     # Convert selected node IDs back to full node dicts
-    return [node for node in G.nodes(data=True) if node[0] in selected_nodes]
+    print("---------------")
+    print(selected_nodes)
+    output = []
+    for element in selected_nodes:
+        card = f"{G.nodes[element]['name']} ({G.nodes[element]['first_season']} → {G.nodes[element]['last_season']})"
+        output.append(card)
+    
+    return output
+    #return [node for node in G.nodes(data=True) if node[0] in selected_nodes]
 def getImage(player_id):
     file_path = "static/images/"+player_id+".jpg"
     if os.path.exists(file_path):
@@ -136,6 +141,7 @@ def start_game():
     game_state['wrong_guesses'] = 0
     game_state['game_over'] = False
     game_state['won'] = False
+    print('entering sugs')
     sugs = best_next_nodes(G, start_id, end_id)
     return jsonify({
         'current_player': format_player2(start_id),
@@ -143,18 +149,17 @@ def start_game():
         'path': [format_player2(p) for p in game_state['path']],
         'edges': [],
         'wrong_guesses': 0,
-        'suggestions' : sugs
+        'sugs' : sugs
     })
 
 @app.route('/guess', methods=['POST'])
 def make_guess():
     if game_state['game_over']:
         return jsonify({'error': 'Game is over'}), 400
-        
     data = request.json
     guess_name = data.get('guess').split(' (')[0]
-    guess_id = next((n for n, d in G.nodes(data=True) if d['name'] == guess_name), None)
     
+    guess_id = next((n for n, d in G.nodes(data=True) if d['name'] == guess_name), None)
     if not guess_id:
         return jsonify({'error': 'Player not found'}), 400
     
@@ -179,7 +184,7 @@ def make_guess():
                 'game_over': True,
                 'won': True,
                 'shortest_path': [format_player2(p) for p in shortest_path],
-                'shortest_edges': shortest_edges
+                'shortest_edges': shortest_edges,
             })
             
         return jsonify({
