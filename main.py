@@ -66,7 +66,8 @@ def best_next_nodes(G, start_id, end_id):
     print(selected_nodes)
     output = []
     for element in selected_nodes:
-        card = f"{G.nodes[element]['name']} ({G.nodes[element]['first_season']} → {G.nodes[element]['last_season']})"
+        card = format_player2(element)
+        #card = f"{G.nodes[element]['name']} ({G.nodes[element]['first_season']} → {G.nodes[element]['last_season']})"
         output.append(card)
     
     return output

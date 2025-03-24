@@ -201,6 +201,43 @@
             width: 80%;
             margin: 10px auto;
         }
+        .hint-player-card {
+            display: flex;
+            align-items: center;
+            background: #2c2c2c;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px auto;
+            width: 90%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .hint-player-card:hover {
+            background: #3a3a3a;
+        }
+
+        .hint-player-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5%;
+            margin-right: 10px;
+        }
+
+        .hint-player-card .player-info {
+            text-align: left;
+        }
+
+        .hint-player-card .player-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff
+        }
+
+        .hint-player-card .player-years {
+            font-size: 14px;
+            color: #bbb;
+        }
     </style>
 </head>
 <body>
@@ -305,7 +342,7 @@
                     
                     // Store suggestions
                     currentSuggestions = data.sugs || [];
-                    $("#hints-container").hide(); // Reset hints display
+                    $("#hints-dialog").hide(); // Reset hints display
                 },
                 error: function(xhr) {
                     alert(xhr.responseJSON.error);
@@ -419,7 +456,14 @@
             } else {
                 let hintHtml = "";
                 currentSuggestions.forEach(suggestion => {
-                    hintHtml += `<button class="hint-button popup" onclick="makeGuess('${suggestion}')">${suggestion}</button>`;
+                    hintHtml += `
+                        <div class="hint-player-card" onclick="makeGuess('${suggestion.name}')">
+                            <img src="${suggestion.image}" alt="${suggestion.name}">
+                            <div class="player-info">
+                                <div class="player-name">${suggestion.name}</div>
+                                <div class="player-years">${suggestion.years}</div>
+                            </div>
+                        </div>`
                 });
                 $("#hints-content").html(hintHtml);
             }
