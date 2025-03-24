@@ -38,13 +38,13 @@ def get_team_abbreviations(year):
 
 if __name__ == "__main__":
     diction = {}
-    for element in range(2025,2026):
+    for element in range(1920,2025):
         teams = []
         teams = get_team_abbreviations(element)
         print(teams)
         diction[element] = teams
     print(diction)
-    with open("teamYears1967.json", "w") as file:
+    with open("teamYears.json", "w") as file:
         json.dump(diction, file, indent=4)
 
 #1967

@@ -19,6 +19,7 @@ game_state = {
     'won': False
 }
 
+
 def best_next_nodes(G, start_id, end_id):
     """Finds the 5 best next nodes from start to end in the shortest path"""
     print('getting neighbors')
@@ -42,18 +43,31 @@ def best_next_nodes(G, start_id, end_id):
     # Find nodes that maintain the same shortest path
     same_length_nodes = [neighbor for neighbor, length in path_lengths.items() if length == min_length + 1]
 
+    score = lambda element: len(list(G.neighbors(element)))
+    selected_nodes = []
+    print(best_nodes)
+    if len(best_nodes) <= 5:
+        selected_nodes = best_nodes
+        if len(selected_nodes) < 5:
+            sorted_next = sorted(same_length_nodes,key=score, reverse=True)
+            selected_nodes = selected_nodes + sorted_next[:5-len(selected_nodes)]
+    else:
+        sorted_best = sorted(best_nodes, key=score, reverse=True)
+        selected_nodes = sorted_best[:5]
+        
     # Select up to 5 nodes (all best_nodes, then fill with random same_length_nodes)
-    selected_nodes = best_nodes[:]
-    if len(selected_nodes) < 5:
-        extra_nodes = same_length_nodes[: 5 - len(selected_nodes)]
-        selected_nodes.extend(extra_nodes)
+    # selected_nodes = best_nodes[:5]
+    # if len(selected_nodes) < 5:
+    #     extra_nodes = same_length_nodes[: 5 - len(selected_nodes)]
+    #     selected_nodes.extend(extra_nodes)
 
     # Convert selected node IDs back to full node dicts
     print("---------------")
     print(selected_nodes)
     output = []
     for element in selected_nodes:
-        card = f"{G.nodes[element]['name']} ({G.nodes[element]['first_season']} → {G.nodes[element]['last_season']})"
+        card = format_player2(element)
+        #card = f"{G.nodes[element]['name']} ({G.nodes[element]['first_season']} → {G.nodes[element]['last_season']})"
         output.append(card)
     
     return output
@@ -222,13 +236,15 @@ def go_back():
     
     game_state['path'].pop()
     game_state['current_player'] = game_state['path'][-1]
+    print(game_state['current_player'])
     edges = [get_edge_info(game_state['path'][i], game_state['path'][i+1]) 
             for i in range(len(game_state['path'])-1)]
-    
+    sugs = best_next_nodes(G, game_state['current_player'], game_state['target_player'])
     return jsonify({
         'path': [format_player2(p) for p in game_state['path']],
         'edges': edges,
-        'wrong_guesses': game_state['wrong_guesses']
+        'wrong_guesses': game_state['wrong_guesses'],
+        'sugs' : sugs
     })
 
 @app.route('/autocomplete', methods=['GET'])
@@ -249,7 +265,6 @@ def serve_image(filename):
     return send_from_directory('static', filename)
 
 if __name__ == '__main__':
-    if __name__ == "__main__":
-        #port = int(os.environ.get("PORT", 5000))
-        #app.run(host="0.0.0.0", port=port)
-        app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+        #app.run()

@@ -167,6 +167,77 @@
         .hint-button:hover {
             background-color: #27ae60;
         }
+        .ui-dialog {
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .ui-dialog-titlebar {
+            background: #2c2c2c;
+            color: #f39c12;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            padding: 10px;
+        }
+
+        .ui-dialog-titlebar-close {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .ui-dialog-content {
+            padding: 15px;
+        }
+
+        .hint-button.popup {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+        }
+        .hint-player-card {
+            display: flex;
+            align-items: center;
+            background: #2c2c2c;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px auto;
+            width: 90%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .hint-player-card:hover {
+            background: #3a3a3a;
+        }
+
+        .hint-player-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5%;
+            margin-right: 10px;
+        }
+
+        .hint-player-card .player-info {
+            text-align: left;
+        }
+
+        .hint-player-card .player-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff
+        }
+
+        .hint-player-card .player-years {
+            font-size: 14px;
+            color: #bbb;
+        }
     </style>
 </head>
 <body>
@@ -190,23 +261,13 @@
             <div>↓</div>
             <input type="text" id="guess-input">
             <button id="hint-btn" onclick="showHints()">Show Hints</button>
-            <div id="hints-container" style="display: none; margin: 10px 0;"></div>
+            <div id="hints-dialog" title="Hints" style="display: none;">
+                <div id="hints-content"></div>
+            </div>
             <div>Wrong Guesses: <span id="wrong-guesses">0</span>/3</div>
             <button onclick="goBack()" id="back-button" style="background-color: #666;" disabled>Back</button>
             <div id="message"></div>
         </div>
-        <!-- <div id="game-screen" style="display: none;">
-            <div>Start:</div>
-            <div id="start-player-card" class="player-card"></div>
-            <div id="start-to-path-arrow" class="path-arrow" style="display: none;">↓</div>
-            <div id="path-container"></div>
-            <input type="text" id="guess-input">
-            <div>Target:</div>
-            <div id="target-player-card" class="player-card"></div>
-            <div>Wrong Guesses: <span id="wrong-guesses">0</span>/3</div>
-            <button onclick="goBack()" id="back-button" style="background-color: #666;" disabled>Back</button>
-            <div id="message"></div>
-        </div> -->
 
         <div id="game-over" style="display: none;">
             <div id="result"></div>
@@ -281,7 +342,7 @@
                     
                     // Store suggestions
                     currentSuggestions = data.sugs || [];
-                    $("#hints-container").hide(); // Reset hints display
+                    $("#hints-dialog").hide(); // Reset hints display
                 },
                 error: function(xhr) {
                     alert(xhr.responseJSON.error);
@@ -338,7 +399,7 @@
                         $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
                         $("#back-button").prop('disabled', false);
                         currentSuggestions = data.sugs || [];
-                        $("#hints-container").hide(); // Hide hints after a correct guess
+                        $("#hints-dialog").dialog("close"); // Close dialog on correct guess
                     } else {
                         $("#wrong-guesses").text(data.wrong_guesses);
                         $("#message").removeClass("success").addClass("error").text("Not a teammate!");
@@ -347,7 +408,7 @@
                     if (data.game_over) {
                         $("#game-screen").hide();
                         $("#game-over").show();
-                        
+                        $("#hints-dialog").dialog("close"); // Close dialog on correct guess
                         if (data.won) {
                             $("#result").text("You Won!");
                             // Show user's path
@@ -381,6 +442,7 @@
                     updatePath(data.path, data.edges);
                     $("#wrong-guesses").text(data.wrong_guesses);
                     $("#message").text("");
+                    currentSuggestions = data.sugs || [];
                     $("#back-button").prop('disabled', data.path.length <= 1);
                 },
                 error: function(xhr) {
@@ -390,19 +452,33 @@
         }
 
         function showHints() {
-            console.log(currentSuggestions)
             if (currentSuggestions.length === 0) {
-                $("#hints-container").html("<p>No hints available.</p>").show();
-                return;
+                $("#hints-content").html("<p>No hints available.</p>");
+            } else {
+                let hintHtml = "";
+                currentSuggestions.forEach(suggestion => {
+                    hintHtml += `
+                        <div class="hint-player-card" onclick="makeGuess('${suggestion.name}')">
+                            <img src="${suggestion.image}" alt="${suggestion.name}">
+                            <div class="player-info">
+                                <div class="player-name">${suggestion.name}</div>
+                                <div class="player-years">${suggestion.years}</div>
+                            </div>
+                        </div>`
+                });
+                $("#hints-content").html(hintHtml);
             }
 
-            let hintHtml = "";
-            console.log(currentSuggestions)
-            currentSuggestions.forEach(suggestion => {
-                // Assuming each suggestion is a dict with a 'name' field
-                hintHtml += `<button class="hint-button" onclick="makeGuess('${suggestion}')">${suggestion}</button>`;
+            $("#hints-dialog").dialog({
+                modal: true,
+                width: 300,
+                dialogClass: "hints-popup",
+                position: { my: "center", at: "center", of: window },
+                close: function() {
+                    // Reset message when closing
+                    $("#message").text("");
+                }
             });
-            $("#hints-container").html(hintHtml).show();
         }
         function updatePlayerCard(selector, name, years, image) {
             $(selector).html(`

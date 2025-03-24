@@ -115,7 +115,7 @@ def scrape_team_roster(team_abbrev, season_year):
 
     # Parse HTML
     soup = BeautifulSoup(response.content, "html.parser")
-    
+    print(soup.text)
     # Find the roster table (id="roster")
     roster_table = soup.find("table", {"id": "roster"})
     if not roster_table:
