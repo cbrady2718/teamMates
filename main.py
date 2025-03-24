@@ -19,6 +19,7 @@ game_state = {
     'won': False
 }
 
+
 def best_next_nodes(G, start_id, end_id):
     """Finds the 5 best next nodes from start to end in the shortest path"""
     print('getting neighbors')
@@ -42,11 +43,23 @@ def best_next_nodes(G, start_id, end_id):
     # Find nodes that maintain the same shortest path
     same_length_nodes = [neighbor for neighbor, length in path_lengths.items() if length == min_length + 1]
 
+    score = lambda element: len(list(G.neighbors(element)))
+    selected_nodes = []
+    print(best_nodes)
+    if len(best_nodes) <= 5:
+        selected_nodes = best_nodes
+        if len(selected_nodes) < 5:
+            sorted_next = sorted(same_length_nodes,key=score, reverse=True)
+            selected_nodes = selected_nodes + sorted_next[:5-len(selected_nodes)]
+    else:
+        sorted_best = sorted(best_nodes, key=score, reverse=True)
+        selected_nodes = sorted_best[:5]
+        
     # Select up to 5 nodes (all best_nodes, then fill with random same_length_nodes)
-    selected_nodes = best_nodes[:]
-    if len(selected_nodes) < 5:
-        extra_nodes = same_length_nodes[: 5 - len(selected_nodes)]
-        selected_nodes.extend(extra_nodes)
+    # selected_nodes = best_nodes[:5]
+    # if len(selected_nodes) < 5:
+    #     extra_nodes = same_length_nodes[: 5 - len(selected_nodes)]
+    #     selected_nodes.extend(extra_nodes)
 
     # Convert selected node IDs back to full node dicts
     print("---------------")
