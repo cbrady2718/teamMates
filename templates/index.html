@@ -442,6 +442,7 @@
                     updatePath(data.path, data.edges);
                     $("#wrong-guesses").text(data.wrong_guesses);
                     $("#message").text("");
+                    currentSuggestions = data.sugs || [];
                     $("#back-button").prop('disabled', data.path.length <= 1);
                 },
                 error: function(xhr) {

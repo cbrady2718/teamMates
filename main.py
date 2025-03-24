@@ -236,13 +236,15 @@ def go_back():
     
     game_state['path'].pop()
     game_state['current_player'] = game_state['path'][-1]
+    print(game_state['current_player'])
     edges = [get_edge_info(game_state['path'][i], game_state['path'][i+1]) 
             for i in range(len(game_state['path'])-1)]
-    
+    sugs = best_next_nodes(G, game_state['current_player'], game_state['target_player'])
     return jsonify({
         'path': [format_player2(p) for p in game_state['path']],
         'edges': edges,
-        'wrong_guesses': game_state['wrong_guesses']
+        'wrong_guesses': game_state['wrong_guesses'],
+        'sugs' : sugs
     })
 
 @app.route('/autocomplete', methods=['GET'])
