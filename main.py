@@ -1,3 +1,4 @@
+import random
 from flask import Flask, render_template, request, jsonify
 import networkx as nx
 from flask_cors import CORS
@@ -7,7 +8,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-with open("teamMateGraph3.pkl", "rb") as f:
+with open("teamMateGraph4.pkl", "rb") as f:
     G = pickle.load(f)
 
 game_state = {
@@ -85,7 +86,8 @@ def format_player2(player_id):
     return {
         "name": player_data['name'],
         "years": f"{player_data['first_season']} → {player_data['last_season']}",
-        "image": getImage(player_id)
+        "image": getImage(player_id),
+        "HOF" : player_data['HOF']
     }
 def format_team_years(team_years_dict):
     result = []
@@ -137,6 +139,13 @@ def get_edge_info(player1, player2):
 def index():
     return render_template('index.html')
 
+@app.route('/get_cards', methods=['GET'])
+def get_cards():
+    cards_folder = 'static/cards'
+    cards_images = [f for f in os.listdir(cards_folder) if f.endswith(('jpg','png','jpeg'))]
+    random.shuffle(cards_images)
+    return jsonify(cards_images)
+
 @app.route('/start_game', methods=['POST'])
 def start_game():
     data = request.json
@@ -156,15 +165,23 @@ def start_game():
     game_state['game_over'] = False
     game_state['won'] = False
     print('entering sugs')
-    sugs = best_next_nodes(G, start_id, end_id)
+    print(format_player2(start_id))
+    #sugs = best_next_nodes(G, start_id, end_id)
     return jsonify({
         'current_player': format_player2(start_id),
         'target_player': format_player2(end_id),
         'path': [format_player2(p) for p in game_state['path']],
         'edges': [],
         'wrong_guesses': 0,
-        'sugs' : sugs
     })
+
+@app.route('/get_suggestions', methods=['GET'])
+def get_Sug():
+    current = game_state['current_player']
+    targ = game_state['target_player']
+    out = best_next_nodes(G, current, targ)
+    return jsonify({"sugs" : out})
+
 
 @app.route('/guess', methods=['POST'])
 def make_guess():
@@ -178,7 +195,7 @@ def make_guess():
         return jsonify({'error': 'Player not found'}), 400
     
     if guess_id in G.neighbors(game_state['current_player']):
-        sugs = best_next_nodes(G, guess_id, game_state['target_player'])
+        #sugs = best_next_nodes(G, guess_id, game_state['target_player'])
         game_state['path'].append(guess_id)
         game_state['current_player'] = guess_id
         
@@ -205,8 +222,7 @@ def make_guess():
             'correct': True,
             'path': [format_player2(p) for p in game_state['path']],
             'edges': edges,
-            'game_over': False,
-            'sugs' : sugs
+            'game_over': False
         })
     else:
         game_state['wrong_guesses'] += 1
@@ -239,12 +255,11 @@ def go_back():
     print(game_state['current_player'])
     edges = [get_edge_info(game_state['path'][i], game_state['path'][i+1]) 
             for i in range(len(game_state['path'])-1)]
-    sugs = best_next_nodes(G, game_state['current_player'], game_state['target_player'])
+    #sugs = best_next_nodes(G, game_state['current_player'], game_state['target_player'])
     return jsonify({
         'path': [format_player2(p) for p in game_state['path']],
         'edges': edges,
-        'wrong_guesses': game_state['wrong_guesses'],
-        'sugs' : sugs
+        'wrong_guesses': game_state['wrong_guesses']
     })
 
 @app.route('/autocomplete', methods=['GET'])
@@ -265,6 +280,6 @@ def serve_image(filename):
     return send_from_directory('static', filename)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-        #app.run()
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host="0.0.0.0", port=port)
+    app.run()

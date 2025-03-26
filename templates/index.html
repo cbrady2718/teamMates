@@ -238,9 +238,54 @@
             font-size: 14px;
             color: #bbb;
         }
+        .player-card.hof {
+            background: #8B6914; /* Dark gold color */
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* Subtle yellow glow */
+        }
+        .hint-player-card.hof {
+            background: #8B6914; /* Dark gold color */
+            box-shadow: 0 0 4px rgba(255, 215, 0, 0.6); /* Subtle yellow glow */
+        }
+        .card-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-gap: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            pointer-events: none;
+            padding: 10px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .card {
+            max-width: 160px;
+            max-height: 160px;
+            width: auto;
+            height: auto;
+            opacity: 0.8;
+            transform-style: preserve-3d;
+            backface-visibility: hidden; 
+            transform: perspective(1000px);  /* Add perspective for better 3D effect */
+            transition: opacity 0.2s ease-in-out; /* Keep only opacity transition */
+        }
     </style>
 </head>
 <body>
+    <div class="grid" id="card-grid"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <div class="game-container">
         <h1>Six Degrees of NBA</h1>
         
@@ -260,7 +305,7 @@
             <div id="path-container"></div>
             <div>↓</div>
             <input type="text" id="guess-input">
-            <button id="hint-btn" onclick="showHints()">Show Hints</button>
+            <button id="hint-btn" onclick="showHints()">Suggestions</button>
             <div id="hints-dialog" title="Hints" style="display: none;">
                 <div id="hints-content"></div>
             </div>
@@ -285,7 +330,119 @@
     </div>
 
     <script>
+    let allCards = [];
+    let displayedCards = [];
+    const cardFolder = '/static/cards/';
+    let unshownCardsQueue = [];
+
+    function fetchCards() {
+        $.ajax({
+            url: '/get_cards',
+            method: 'GET',
+            success: function(data) {
+                allCards = data;
+                initializeCards();
+            },
+            error: function(xhr) {
+                console.error('Failed to fetch cards:', xhr);
+            }
+        });
+    }
+
+    function getCardsToFit() {
+        const cardWidth = 160 + 10;
+        const cardHeight = 160 + 10;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const cardsPerRow = Math.floor(screenWidth / cardWidth);
+        const rows = Math.floor(screenHeight / cardHeight);
+        return cardsPerRow * rows;
+    }
+
+    function initializeCards() {
+        const numCardsToShow = Math.min(getCardsToFit(), allCards.length);
+        for (let i = 0; i < numCardsToShow; i++) {
+            const cardIndex = Math.floor(Math.random() * allCards.length);
+            displayedCards.push(allCards[cardIndex]);
+            allCards.splice(cardIndex, 1);
+        }
+        unshownCardsQueue = [...allCards];
+        updateCardGrid();
+    }
+
+    function updateCardGrid() {
+        console.log('updating')
+        const grid = document.getElementById('card-grid');
+        grid.innerHTML = '';
+        displayedCards.forEach(card => {
+            const img = document.createElement('img');
+            img.src = cardFolder + card;
+            img.className = 'card';
+            grid.appendChild(img);
+        });
+    }
+    function swapCard() {
+        if (unshownCardsQueue.length < 1 || displayedCards.length < 1) return;
+
+        // Get random indices for cards to swap
+        const indices = [];
+        while (indices.length < 1 && indices.length < displayedCards.length) {
+            const randomIndex = Math.floor(Math.random() * displayedCards.length);
+            if (!indices.includes(randomIndex)) {
+                indices.push(randomIndex);
+            }
+        }
+        // Prepare swap data
+        const cardsToSwap = indices.map(index => ({
+            oldCard: displayedCards[index],
+            element: document.querySelectorAll('.card')[index],
+            newCardIndex: null,
+            newCard: null,
+            index: index
+        }));
+        // Assign new cards
+        cardsToSwap.forEach(swap => {
+            let newIndex;
+            swap.newCard = unshownCardsQueue.shift();
+            unshownCardsQueue.push(swap.oldCard)
+        });
+
+        // Create animation timeline
+        const tl = gsap.timeline();
+
+        tl
+            // Flip out (halfway)
+            .to(cardsToSwap.map(s => s.element), {
+                rotationY: 90,
+                opacity: 0,
+                duration: 0.4,
+                ease: "power2.in",
+                onComplete: () => {
+                    // Update card sources at the midway point when cards are edge-on
+                    cardsToSwap.forEach(swap => {
+                        if (swap.element) {
+                            swap.element.src = cardFolder + swap.newCard;
+                            displayedCards[swap.index] = swap.newCard;
+                            allCards[swap.newCardIndex] = swap.oldCard;
+                        }
+                    });
+                }
+            })
+            // Flip in
+            .fromTo(cardsToSwap.map(s => s.element), 
+                { rotationY: -90, opacity: 0 },
+                { 
+                    rotationY: 0,
+                    opacity: 0.8,
+                    duration: 0.4,
+                    ease: "power2.out"
+                }
+            );
+    }
+
     $(document).ready(function() {
+        fetchCards();
+        setInterval(swapCard, 2000);
             // Autocomplete for start and end players (no select action)
             $("#start-player, #end-player").autocomplete({
                 source: function(request, response) {
@@ -334,54 +491,23 @@
                 success: function(data) {
                     $("#start-screen").hide();
                     $("#game-screen").show();
-                    
-                    updatePlayerCard("#start-player-card", data.path[0].name, data.path[0].years, data.path[0].image);
-                    updatePlayerCard("#target-player-card", data.target_player.name, data.target_player.years, data.target_player.image);
+                    console.log(data.path[0])
+                    updatePlayerCard("#start-player-card", data.path[0].name, data.path[0].years, data.path[0].image, data.path[0].HOF);
+                    updatePlayerCard("#target-player-card", data.target_player.name, data.target_player.years, data.target_player.image, data.target_player.HOF);
                     updatePath(data.path, data.edges);
                     $("#back-button").prop('disabled', data.path.length <= 1);
                     
                     // Store suggestions
-                    currentSuggestions = data.sugs || [];
+                    currentSuggestions = [];
+                    $("#hint-btn").prop('disabled', true).css('opacity', 0.5);
                     $("#hints-dialog").hide(); // Reset hints display
+                    fetchSuggestions()
                 },
                 error: function(xhr) {
                     alert(xhr.responseJSON.error);
                 }
             });
         }
-        // function makeGuess() {
-        //     const guess = $("#guess-input").val();
-        //     if (!guess) return;  // Prevent empty guesses
-            
-        //     $.ajax({
-        //         url: '/guess',
-        //         method: 'POST',
-        //         contentType: 'application/json',
-        //         data: JSON.stringify({ guess: guess }),
-        //         success: function(data) {
-        //             if (data.correct) {
-        //                 updatePath(data.path, data.edges);
-        //                 $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
-        //                 $("#back-button").prop('disabled', false);
-        //             } else {
-        //                 $("#wrong-guesses").text(data.wrong_guesses);
-        //                 $("#message").removeClass("success").addClass("error").text("Not a teammate!");
-        //             }
-                    
-        //             if (data.game_over) {
-        //                 $("#game-screen").hide();
-        //                 $("#game-over").show();
-        //                 $("#result").text(data.won ? "You Won!" : "Game Over!");
-        //                 updatePath(data.shortest_path, data.shortest_edges, "#shortest-path-container");
-        //             }
-        //             $("#guess-input").val("");
-        //         },
-        //         error: function(xhr) {
-        //             $("#message").addClass("error").text(xhr.responseJSON.error);
-        //             $("#guess-input").val("");
-        //         }
-        //     });
-        // }
         function makeGuess(guess = null) {
             const guessValue = guess || $("#guess-input").val();
             // const guess = $("#guess-input").val();
@@ -398,8 +524,10 @@
                         updatePath(data.path, data.edges);
                         $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
                         $("#back-button").prop('disabled', false);
-                        currentSuggestions = data.sugs || [];
+                        currentSuggestions = [];
                         $("#hints-dialog").dialog("close"); // Close dialog on correct guess
+                        $("#hint-btn").prop('disabled', true).css('opacity', 0.5);
+                        fetchSuggestions();
                     } else {
                         $("#wrong-guesses").text(data.wrong_guesses);
                         $("#message").removeClass("success").addClass("error").text("Not a teammate!");
@@ -457,14 +585,16 @@
             } else {
                 let hintHtml = "";
                 currentSuggestions.forEach(suggestion => {
+                    const hofClass = suggestion.HOF ? 'hof' : '';
+                    console.log(hofClass)
                     hintHtml += `
-                        <div class="hint-player-card" onclick="makeGuess('${suggestion.name}')">
+                        <div class="hint-player-card ${hofClass}" onclick="makeGuess('${suggestion.name}')">
                             <img src="${suggestion.image}" alt="${suggestion.name}">
                             <div class="player-info">
                                 <div class="player-name">${suggestion.name}</div>
                                 <div class="player-years">${suggestion.years}</div>
                             </div>
-                        </div>`
+                        </div>`;
                 });
                 $("#hints-content").html(hintHtml);
             }
@@ -475,19 +605,19 @@
                 dialogClass: "hints-popup",
                 position: { my: "center", at: "center", of: window },
                 close: function() {
-                    // Reset message when closing
                     $("#message").text("");
                 }
             });
         }
-        function updatePlayerCard(selector, name, years, image) {
+        function updatePlayerCard(selector, name, years, image, hof = false) {
+            const hofClass = hof ? 'hof' : '';
             $(selector).html(`
                 <img src="${image}" alt="${name}">
                 <div class="player-info">
                     <div class="player-name">${name}</div>
                     <div class="player-years">${years}</div>
                 </div>
-            `);
+            `).addClass(hofClass);
         }
 
         function showOptimalPath(shortestPath, shortestEdges) {
@@ -499,11 +629,29 @@
             }, 500);
         }
 
+        function fetchSuggestions() {
+            $.ajax({
+                url: '/get_suggestions',  // New endpoint for suggestions
+                method: 'GET',  // Assuming no data needs to be sent; adjust if necessary
+                success: function(data) {
+                    currentSuggestions = data.sugs || [];
+                    $("#hint-btn").prop('disabled', false).css('opacity', 1); // Enable hint button
+                },
+                error: function(xhr) {
+                    console.error("Failed to load suggestions:", xhr.responseJSON.error);
+                    currentSuggestions = [];
+                    $("#hint-btn").prop('disabled', false).css('opacity', 1); // Enable anyway to avoid locking
+                    $("#message").addClass("error").text("Hints unavailable.");
+                }
+            });
+        }
+
         // Update the existing updatePath function to handle different containers
         function updatePath(path, edges, container = "#path-container") {
             let html = "";
             for (let i = 0; i < path.length; i++) {
-                html += `<div class="player-card">
+                const hofClass = path[i].HOF ? 'hof' : '';
+                html += `<div class="player-card ${hofClass}">
                     <img src="${path[i].image}" alt="${path[i].name}">
                     <div class="player-info">
                         <div class="player-name">${path[i].name}</div>
@@ -518,7 +666,7 @@
             $(container).html(html);
             $(container).animate({
                 scrollTop: $(container)[0].scrollHeight
-            }, 500); // 500ms duration for smooth scrolling
+            }, 500);
         }
     </script>
 </body>
