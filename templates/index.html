@@ -525,7 +525,9 @@
                         $("#message").removeClass("error").addClass("success").text("Correct! Next teammate?");
                         $("#back-button").prop('disabled', false);
                         currentSuggestions = [];
-                        $("#hints-dialog").dialog("close"); // Close dialog on correct guess
+                        if ($("#hints-dialog").dialog("instance")) {
+                            $("#hints-dialog").dialog("close");
+                        }
                         $("#hint-btn").prop('disabled', true).css('opacity', 0.5);
                         fetchSuggestions();
                     } else {
