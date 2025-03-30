@@ -4,7 +4,6 @@ Height(inches) * -.24203
 Championships * .80573
 Peak Win Shares * .41568
 All-Star Selections * 1.0244
-Leaderboard Points  * 0.1594
 
 Leaderboard Points: 
 1st = 10 Points
