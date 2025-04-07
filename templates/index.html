@@ -538,7 +538,9 @@
                     if (data.game_over) {
                         $("#game-screen").hide();
                         $("#game-over").show();
-                        $("#hints-dialog").dialog("close"); // Close dialog on correct guess
+                        if ($("#hints-dialog").dialog("instance")) {
+                            $("#hints-dialog").dialog("close");
+                        }
                         if (data.won) {
                             $("#result").text("You Won!");
                             // Show user's path
